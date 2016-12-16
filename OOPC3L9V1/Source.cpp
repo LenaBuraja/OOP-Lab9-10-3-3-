@@ -84,15 +84,15 @@ int main() {
 	std::cout << "Enter three array:" << std::endl;
 	std::cin >> arr3;
 
-	std::map<std::string, Array> student;
+	std::map<std::string, Array*> student;
 
-	student.insert({ "Latkovich" , arr1 });
-	student.insert(std::pair<std::string, Array> ("Natarova", arr2 ));
-	student.insert({ "Buraja", arr3 });
+	student.insert(std::make_pair("Latkovich", &arr1));
+	student.insert(std::pair<std::string, Array*>("Natarova", &arr2));
+	student.insert({ "Buraja", &arr3 });
 
 	std::cout << "Map students:" << std::endl;
 	for (auto it = student.begin(); it != student.end(); it++) {
-		std::cout << (*it).first << " - " << (*it).second << std::endl;
+		std::cout << (*it).first << " - " << *(*it).second << std::endl;
 	}
 
 	return 0;
