@@ -1,98 +1,86 @@
 #include <iostream>
 #include <memory>
 #include <string>
+#include <list>
 #include <map>
-#include <set>
 #include <iterator>
 #include <algorithm>
+#include <ctime>
+#include "Array.h"
 
-class Array {
-	int size;
-	int *element;
-public:
-	Array(int size) {
-		this->size = 0;
-		element = new int[this->size];
-		setSize(size);
-	}
-
-	Array(const Array& arr) {
-		for (int i = 0; i < getSize(); i++) {
-			setElement(i, arr.getElement(i));
-		}
-	}
-
-	Array() : Array(5) {
-
-	}
-
-	void setSize(int newSize) {
-		int *newArr = new int[newSize];
-		int minSize = (size < newSize) ? size : newSize;
-		for (int i = 0; i < minSize; i++) {
-			newArr[i] = element[i];
-		}
-		delete[] element;
-		size = newSize;
-		element = newArr;
-	}
-
-	void setElement(int index, int value) {
-		if (index >= 0 || index < size) {
-			element[index] = value;
-		}
-	}
-	int getSize() const {
-		return size;
-	}
-
-	int getElement(int index) const {
-		return element[index];
-	}
-	~Array() {
-
-	}
-
-	friend std::ostream &operator<< (std::ostream& out, Array& arr) {
-		for (int i = 0; i < arr.getSize(); i++) {
-			out << arr.getElement(i);
-			if (i != arr.getSize() - 1) {
-				out << ", ";
-			}
-		}
-		return out;
-	}
-
-	friend std::istream &operator >> (std::istream& in, Array& arr) {
-		for (int i = 0; i < arr.getSize(); i++) {
-			int value;
-			in >> value;
-			arr.setElement(i, value);
-		}
-		return in;
-	}
-};
 
 int main() {
+	//srand(time(0));
+
 	Array arr1;
-	std::cout << "Enter first array:" << std::endl;
-	std::cin >> arr1;
+	for (int i = 0; i < arr1.getSize(); i++) {
+		arr1.setElement(i, 3 + rand() % 7);
+	}
 	Array arr2;
-	std::cout << "Enter second array:" << std::endl;
-	std::cin >> arr2;
+	for (int i = 0; i < arr2.getSize(); i++) {
+		arr2.setElement(i, 3 + rand() % 7);
+	}
 	Array arr3;
-	std::cout << "Enter three array:" << std::endl;
-	std::cin >> arr3;
+	for (int i = 0; i < arr3.getSize(); i++) {
+		arr3.setElement(i, 3 + rand() % 7);
+	}
+	Array arr4;
+	for (int i = 0; i < arr4.getSize(); i++) {
+		arr4.setElement(i, 3 + rand() % 7);
+	}
+	Array arr5;
+	for (int i = 0; i < arr5.getSize(); i++) {
+		arr5.setElement(i, 3 + rand() % 7);
+	}
 
 	std::map<std::string, Array*> student;
 
 	student.insert(std::make_pair("Latkovich", &arr1));
 	student.insert(std::pair<std::string, Array*>("Natarova", &arr2));
 	student.insert({ "Buraja", &arr3 });
+	student.insert(std::make_pair("Shostak", &arr4));
+	student.insert({ "Sokol", &arr5 });
 
 	std::cout << "Map students:" << std::endl;
 	for (auto it = student.begin(); it != student.end(); it++) {
 		std::cout << (*it).first << " - " << *(*it).second << std::endl;
+	}
+	system("pause");
+	
+	std::map<std::string, Array*>::iterator it;
+	it = student.find("Latcovich");
+	if (it == student.end()) std::cout << "INVALID KEY" << std:: endl;
+		else std::cout << (*it).first << " - " << *(*it).second << std::endl;
+	it = student.find("Latkovich");
+	if (it == student.end()) std::cout << "INVALID KEY" << std::endl;
+		else std::cout << (*it).first << " - " << *(*it).second << std::endl;
+		system("pause");
+
+	//std::map<std::string, Array*> listStudents;
+	//Array arr6;
+	//for (int i = 0; i < arr6.getSize(); i++) {
+	//	arr6.setElement(i, 3 + rand() % 7);
+	//}
+	//Array arr7;
+	//for (int i = 0; i < arr7.getSize(); i++) {
+	//	arr7.setElement(i, 3 + rand() % 7);
+	//}
+	//Array arr8;
+	//for (int i = 0; i < arr8.getSize(); i++) {
+	//	arr8.setElement(i, 3 + rand() % 7);
+	//}
+	//Array arr9;
+	//for (int i = 0; i < arr9.getSize(); i++) {
+	//	arr9.setElement(i, 3 + rand() % 7);
+	//}
+	std::list<Array*> listStudents;
+	for (auto it = student.begin(); it != student.end(); it++) {
+		if ((*it).first.front() == 'K') {
+			listStudents.push_back((*it).second);
+		}
+	}
+	for (auto it = listStudents.begin(); it != listStudents.end(); it++) {
+		std::cout << "List assessments: " << *it << std::endl;
 	}
 
 	return 0;
